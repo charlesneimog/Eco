@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+    <head>
+        <!-- set favicon  -->
+        <meta charset="UTF-8">
+        <title>Conductor</title>
+    </head>
+
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+
+        #element {
+            margin: 40px auto 20px auto;
+            height: 200px;
+            width: 400px;
+            background-color: #e9e9e9;
+            font-size: 20px;
+            padding: 40px 0 0 0;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        #go-button {
+            width: 200px;
+            display: block;
+            margin: 50px auto 0 auto;
+        }
+
+        #element:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            background-color: pink;
+            margin: 0;
+        }
+
+        #element:-moz-full-screen {
+            background-color: pink;
+            margin: 0;
+        }
+
+        #element:-ms-fullscreen {
+            background-color: pink;
+            margin: 0;
+        }
+
+        #element:fullscreen { 
+            background-color: pink;
+            margin: 0;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            font-size: 50px;
+            font-family: "Euclid Circular B",sans-serif;
+          }
+          .button-h1 {
+            align-items: center;
+            background-color: #d9d9d9;
+            border-radius: 15px;
+            border-width: 30;
+            font-family: "Euclid Circular B",sans-serif;
+            height: 80px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 45px;
+            padding-right: 45px;
+            padding-top: calc(1em - 1px);
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: box-shadow .15s,transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            font-size: 40px;
+          }
+    </style>
+    <h1 id="ConductorTitle" class="button-h1">Click anywhere on the page to go full screen</h1>
+
+    <section id="FluteScoreSection" style="position: fixed; top: 20%; left: 10px; height: 25%; width: 45%; object-fit: contain; border: 2px solid black; border-radius: 10px;">
+        <!-- text must be bold  -->
+        <p style="position: absolute; top: -20px; left: 0; font-size: 20px; font-family: 'Euclid Circular B',sans-serif; font-weight: bold; color: black; text-align: left; padding-left: 5px; padding-top: 0px;">Flute/Piccolo</p>
+        <img id="FluteScore" src="../flute/fullscreen.png" alt="Flute Score" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: contain;">
+        <div id="FluteDurationBar" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background-color: black; border-radius: 0 0 5px 5px;"></div>
+    </section>
+
+    <section id="SaxScoreSection" style="position: fixed; top: 20%; right: 10px; height: 25%; width: 45%; object-fit: contain; border: 2px solid black; border-radius: 10px;">
+        <p style="position: absolute; top: -20px; left: 0; font-size: 20px; font-family: 'Euclid Circular B',sans-serif; font-weight: bold; color: black; text-align: left; padding-left: 5px; padding-top: 0px;">Saxophone</p>
+        <img id="SaxScore" src="../sax/fullscreen.png" alt="Sax Score" style="position: absolute; top: 0; right: 0; height: 100%; width: 100%; object-fit: contain;">
+        <div id="SaxDurationBar" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background-color: black; border-radius: 0 0 5px 5px;"></div>
+    </section>
+    
+    <section id="GuitarScoreSection" style="position: fixed; bottom: 20%; left: 10px; height: 25%; width: 45%; object-fit: contain; border: 2px solid black; border-radius: 10px;">
+        <p style="position: absolute; top: -20px; left: 0; font-size: 20px; font-family: 'Euclid Circular B',sans-serif; font-weight: bold; color: black; text-align: left; padding-left: 5px; padding-top: 0px;">Guitar</p>
+        <img id="GuitarScore" src="../guitar/fullscreen.png" alt="Guitar Score" style="position: absolute; bottom: 0; left: 0; height: 100%; width: 100%; object-fit: contain;">
+        <div id="GuitarDurationBar" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background-color: black; border-radius: 0 0 5px 5px;"></div>
+    </section>
+
+    <section id="CelloScoreSection" style="position: fixed; bottom: 20%; right: 10px; height: 25%; width: 45%; object-fit: contain; border: 2px solid black; border-radius: 10px;">
+        <p style="position: absolute; top: -20px; left: 0; font-size: 20px; font-family: 'Euclid Circular B',sans-serif; font-weight: bold; color: black; text-align: left; padding-left: 5px; padding-top: 0px;">Cello</p>
+        <img id="CelloScore" src="../cello/fullscreen.png" alt="Cello Score" style="position: absolute; bottom: 0; right: 0; height: 100%; width: 100%; object-fit: contain;">
+        <div id="CelloDurationBar" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background-color: black; border-radius: 0 0 5px 5px;"></div>
+    </section>
+
+    <script>
+        var score_name_old = "fullscreen";
+
+
+        // =======================================
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
+        }
+
+        // =======================================
+        function updateprogress(duration) {
+            var start = new Date().getTime();
+            var interval = setInterval(function() {
+                var now = new Date().getTime();
+                var progress = now - start;
+                // get elemnt by id
+                var FluteDuration = document.getElementById('FluteDurationBar');
+                var SaxDuration = document.getElementById('SaxDurationBar');
+                var GuitarDuration = document.getElementById('GuitarDurationBar');
+                var CelloDuration = document.getElementById('CelloDurationBar');
+                var durWidth = Math.min(progress / duration * 100, 100);
+                
+                // set width
+                FluteDuration.style.width = durWidth + '%';
+                SaxDuration.style.width = durWidth + '%';
+                GuitarDuration.style.width = durWidth + '%';
+                CelloDuration.style.width = durWidth + '%';
+                if (durWidth == 100) {
+                    clearInterval(interval);
+                    FluteDuration.style.width = 100 + '%';
+                    SaxDuration.style.width = 100 + '%';
+                    GuitarDuration.style.width = 100 + '%';
+                    CelloDuration.style.width = 100 + '%';
+
+                }              
+            }, 30); 
+        }
+        // =======================================
+        function updateimage() {
+            var FluteScore = document.getElementById('FluteScore');
+            var SaxScore = document.getElementById('SaxScore');
+            var GuitarScore = document.getElementById('GuitarScore');
+            var CelloScore = document.getElementById('CelloScore');
+            // read json file inside flute/update_rate.json and get the update rate
+            readTextFile("conductor.json" + '?' + new Date().getTime(), function(text){
+                var data = JSON.parse(text);
+                var update_rate = data.msFlute;
+                var score_name = data.name;
+                FluteScore.src = "../flute/" + score_name + '.png' + '?' + new Date().getTime();
+                SaxScore.src = "../sax/" + score_name + '.png' + '?' + new Date().getTime();
+                GuitarScore.src = "../guitar/" + score_name + '.png' + '?' + new Date().getTime();
+                CelloScore.src = "../cello/" + score_name + '.png' + '?' + new Date().getTime();
+
+
+                if (score_name == score_name_old) {
+                    setTimeout(function() {updateimage()}, 60);
+                } 
+                else {
+                    score_name_old = score_name;
+                    updateprogress(update_rate);
+                    setTimeout(function() {updateimage()}, 60);
+                }
+            });
+        }
+
+        updateprogress(0);
+        document.onclick = function (argument) {
+            var conf = confirm("Fullscreen mode?");
+            var docelem = document.documentElement;
+
+            if (conf == true) {
+                if (docelem.requestFullscreen) {
+                    docelem.requestFullscreen();
+                }
+                else if (docelem.mozRequestFullScreen) {
+                    docelem.mozRequestFullScreen();
+                }
+                else if (docelem.webkitRequestFullScreen) {
+                    docelem.webkitRequestFullScreen();
+                }
+                else if (docelem.msRequestFullscreen) {
+                    docelem.msRequestFullscreen();
+                }
+            }
+            document.getElementById("ConductorTitle").innerHTML = "Conductor"; 
+            updateimage();
+            document.onclick = null;
+        }
+
+    </script>
+
+
+
+</html>

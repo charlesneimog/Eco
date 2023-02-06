@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+	<html lang=en-us>
+		<head>
+			<meta charset=utf-8>
+			<meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+			<title>Emcc Simple Template</title>
+		</head>
+		<body>
+			<h1 id=title>Emcc Simple Template</h1>
+			<h1 id="freq">Pitch detector not initialized</h1>
+			<script>
+				// define Module
+				Module = {};
+			</script>
+			<script async src=CFunctions.js></script> <!-- HERE IS THE LOAD OF THE JS FILE THAT COME FROM THE EMCC COMPILATION -->
+			<script>
+				var stream = navigator.mediaDevices.getUserMedia({audio: true, video: false});
+				var size = 2048;
+				var last_fft = new Date().getTime();
+				var pitchesArray = [];
+				Module["onRuntimeInitialized"] = function() {
+					console.log("Audio Stream Started");
+					function PitchDetection(data, sampleRate) {
+						var now = new Date().getTime();
+						if (now - last_fft > 100) {
+							last_fft = now;
+							var sound = Module._mallocMemory(size * 4);
+							Module.HEAPF32.set(data, sound / 4);
+							var pitch = Module._C_getPitch(sound, sampleRate);
+							Module._freeMemory(sound);
+							
+							if (pitch > 3520 || pitch < 65){
+								document.getElementById("freq").innerHTML = "Not pitch was detected"
+								pitchesArray = []
+							} else{
+								var midicents = (1200 * Math.log2(pitch / 440)) + 6900;
+								// remove floating point from midicents
+								midicents = Math.round(midicents);
+								// add modulo 1200 to get cents
+								midicents = midicents % 1200;
+								// add pitch to pitchesArray
+								pitchesArray.push(midicents);
+								if (pitchesArray.length > 20){
+									pitchesArray.shift(); // NOTE:  this make the array to have always 20 elements
+
+									// get the average of the last 10 elements
+									var sum = pitchesArray.reduce(function(a, b) { return a + b; });
+									var avg = sum / pitchesArray.length;
+									avg =  Math.round(avg);
+									document.getElementById("freq").innerHTML = "Pitch detected: " + avg + " mc";
+								} else{
+									document.getElementById("freq").innerHTML = "Pitch detected: " + midicents + " mc";
+								}
+
+
+
+							}
+						}
+					}
+					
+					function AudioStream() {
+						var audioContext = new AudioContext();
+						var analyser = audioContext.createAnalyser();
+						analyser.fftSize = 2048;
+						var sampleRate = audioContext.sampleRate;
+						var sampleRate = audioContext.sampleRate;
+						var data = new Float32Array(analyser.fftSize);
+						function step() {
+							requestAnimationFrame(step);
+							analyser.getFloatTimeDomainData(data);
+							PitchDetection(data, sampleRate);
+						}
+					
+						stream.then(function(stream) {
+							var source = audioContext.createMediaStreamSource(stream);
+							source.connect(analyser);
+							step();
+					
+						});
+					}
+					AudioStream();
+				}
+			</script>
+		</body>
+	</html>

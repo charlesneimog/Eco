@@ -1,0 +1,17 @@
+#N canvas 406 45 1346 852 12;
+#X msg 7 32 start;
+#X msg 66 91 stop;
+#X msg 32 60 port 8080;
+#X text 280 50 To access microphones \, cameras \, and other devices from smartphones/tablets via JavaScript \, SSL is required.;
+#X obj 138 153 tgl 20 0 empty empty empty 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
+#X obj 138 78 loadbang;
+#X msg 138 103 1;
+#X msg 138 185 ssl \$1;
+#X obj 7 238 pd-server/server 8090;
+#X connect 0 0 8 0;
+#X connect 1 0 8 0;
+#X connect 2 0 8 0;
+#X connect 4 0 7 0;
+#X connect 5 0 6 0;
+#X connect 6 0 4 0;
+#X connect 7 0 8 0;

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <style type="text/css">
+       
+        html {
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+
+        }
+        body {
+           margin: 0px;
+           min-height: 100%;
+           width: 100%;
+        }      
+
+        #element {
+            margin: 0px auto 0px auto;
+            height: 200px;
+            width: 400px;
+            background-color: #e9e9e9;
+            font-size: 20px;
+            padding: 40px 0 0 0;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        #element:-webkit-full-screen {
+            width: 0%; /* TODO: Clear code */
+            height: 0%;
+            background-color: pink;
+            margin: 0;
+        }
+
+        #element:-moz-full-screen {
+            background-color: pink;
+            margin: 0;
+        }
+
+        #element:-ms-fullscreen {
+            background-color: pink;
+            margin: 0;
+        }
+
+        #element:fullscreen { 
+            background-color: pink;
+            margin: 0;
+        }
+        img {
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h1 {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            font-size: 34px;
+            font-family: "Euclid Circular B",sans-serif;
+          }
+          .button-h1 {
+            align-items: center;
+            background-color: #d9d9d9;
+            border-radius: 15px;
+            border-width: 30;
+            font-family: "Euclid Circular B",sans-serif;
+            height: 60px;
+            justify-content: center;
+            line-height: 1;
+            padding-left: 45px;
+            padding-right: 45px;
+            padding-top: 20px; 
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: box-shadow .15s,transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            font-size: 35px;
+          }
+    </style>
+    <script async src="yin/CFunctions.js"></script>
+    <script src="fft/pulse.js"></script>
+    <script src="sax.js"></script>
+    <body>
+        <h1 id="InstrumentTitle" class="button-h1">Click anywhere on the page to go full screen</h1>
+        <div id="DurationNote" position="fixed" style="position: fixed; top: 10%; left: 0%;" background-color: black;"></div> <!-- THIS IS MY RECT -->
+        <svg id="InstrumentBang" width="14%" height="14%" style="position: fixed; top: 5%; left: 0%;">
+            <rect id="BangRect" x="0" y="0" width="100" height="100" stroke="black" strocke-width="4" fill="white"/>
+            <circle id="BangCircle" cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="white" />
+            <text id="BangText" x="50" y="55" text-anchor="middle" alignment-baseline="middle" font-size="15" font-weight="bold">Attack</text>
+        </svg>
+        <script> 
+
+            loadPulse() // loadPulse is a function that returns a promise
+                .then(module => {
+                    pulse = module;
+                    console.log("Pulse loaded");
+            })
+
+            var bangSVG = document.getElementById("InstrumentBang");
+            bangSVG.style = "none";
+            document.onclick = function (argument) {
+                var conf = confirm("Fullscreen mode?");
+                var docelem = document.documentElement;
+
+                if (conf == true) {
+                    if (docelem.requestFullscreen) {
+                        docelem.requestFullscreen();
+                    }
+                    else if (docelem.mozRequestFullScreen) {
+                        docelem.mozRequestFullScreen();
+                    }
+                    else if (docelem.webkitRequestFullScreen) {
+                        docelem.webkitRequestFullScreen();
+                    }
+                    else if (docelem.msRequestFullscreen) {
+                        docelem.msRequestFullscreen();
+                    }
+                }
+                document.getElementById("InstrumentTitle").innerHTML = "Sax"; 
+                updateScore(0);
+                FullScreenMode = true;  
+                document.onclick = null;
+            }
+        </script>
+        <img id="InstrumentScore" src="fullscreen.png" alt="Sax Score">
+        <div id="DurationBar" style="position: fixed; bottom: 0; left: 0; width: 0%; height: 80px; background-color: black;"></div> <!-- THIS IS MY RECT -->
+    </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Ac. Guitar</title>
+    </head>
+    <style>
+        img {
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h1 {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            font-size: 50px;
+            font-family: "Euclid Circular B",sans-serif;
+          }
+          .button-h1 {
+            align-items: center;
+            background-color: #d9d9d9;
+            border-radius: 15px;
+            border-width: 30;
+            font-family: "Euclid Circular B",sans-serif;
+            height: 80px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 45px;
+            padding-right: 45px;
+            padding-top: calc(1em - 1px);
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: box-shadow .15s,transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            font-size: 40px;
+          }
+    </style>
+    
+    <h1 class="button-h1">Ac. Guitar</h1>
+    <img src="guitar/score.png" alt="">
+    <div style="position: fixed; bottom: 0; left: 0; width: 50%; height: 80px; background-color: black;"></div> <!-- THIS IS MY RECT -->
+    
+    <script>
+        var var_blick_ant = 0;
+        var score_name_old = "no_gesture";
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
+        }
+
+        // function to update div width in order to show the progress
+        function updateprogress(duration) {
+            var start = new Date().getTime();
+            var interval = setInterval(function() {
+                var now = new Date().getTime();
+                var progress = now - start;
+                var div = document.getElementsByTagName('div')[0];
+                var div_width = Math.min(progress / duration * 100, 100);
+                div.style.width =  div_width + '%';
+                // when the progress is 100%, clear the interval
+                if (div_width == 100) {
+                    clearInterval(interval);
+                    div.style.width = 100;
+                }              
+            }, 10); 
+        }
+
+        // function to update the image
+        function updateimage() {
+            var var_blick_ant = 0;
+            var i = 1;
+            var image = document.getElementsByTagName('img')[0];
+            image.src = 'guitar/score' + '.png' + '?' + new Date().getTime();
+            // read json file inside flute/update_rate.json and get the update rate
+            readTextFile("guitar/update_rate.json" + '?' + new Date().getTime(), function(text){
+                var data = JSON.parse(text);
+                var update_rate = data.update_rate;
+                var score_name = data.name;
+                if (score_name == score_name_old) {
+                    console.log("Old Gesture"); 
+                    // sleep for 100 ms
+                    setTimeout(function() {updateimage()}, 100);
+                } 
+                else {
+                    score_name_old = score_name;
+                    var div = document.getElementsByTagName('div')[0];
+                    updateprogress(update_rate);
+                    setTimeout(function() {updateimage()}, 100);
+                }
+            });
+        }
+        
+        updateimage();
+        
+    </script>
+</html>
