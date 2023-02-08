@@ -17,20 +17,25 @@ jobs:
         submodules: recursive
         fetch-depth: 0
 
-    - name: Install PureData
-      run: brew install --cask pd
+    - name: Install Python3.11
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
 
-    - name: Build
-      run: make PYTHON_VERSION=python3.11 PYTHON_INCLUDE=/Library/Frameworks/Python.framework/Versions/3.11/include/python3.11
+    - name: Install requirements
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt -t ./build
 
-    - name: Upload Object
+    - name: Zip build
+      run: |
+        zip -r build.zip build
+
+    - name: Upload build
       uses: actions/upload-artifact@v2
       with:
-        name: py4pd
-        path: py4pd.pd_darwin 
+        name: build
+        path: build.zip
 
-    - name: Move py4pd.pd_darwin to test
-      run: mv py4pd.pd_darwin test/py4pd.pd_darwin
+        
 
-    - name: Run Test
-      run: /Applications/Pd-*.app/Contents/Resources/bin/pd -nogui test/test.pd
