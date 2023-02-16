@@ -478,7 +478,11 @@ def FLUTE_gesto4():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(4500)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -578,6 +582,7 @@ def FLUTE_gesto5():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iteration = 0
     while True:
         iteration += 1
         if midicent > 8200:
@@ -648,7 +653,11 @@ def FLUTE_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(8300)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -743,7 +752,11 @@ def FLUTE_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6500)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1021,7 +1034,11 @@ def FLUTE_gesto10():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6300)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1111,7 +1128,11 @@ def FLUTE_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(7800)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]

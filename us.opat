@@ -1,0 +1,257 @@
+
+(:patch
+ (:name "us")
+ (:doc "")
+ (:info
+  (:created "2023/02/11 11:09:28")
+  (:modified "2023/02/11 12:39:43")
+  (:by "om-sharp")
+  (:version 1.07))
+ (:window (:size (894 654)) (:position (919 109)))
+ (:grid nil)
+ (:lock nil)
+ (:boxes
+  (:box
+   (:type :abstraction)
+   (:reference
+    (:object
+     (:class run-py-f-internal)
+     (:slots
+      ((:name " new-py-script ")
+       (:protected-p nil)
+       (:icon :py-f)
+       (:text
+        (:list
+         "(py_var (x )
+"
+         "\"
+from om_py.python_to_om import to_om
+
+list_of_numbers = []
+
+for x in range(10):
+    list_of_numbers.append(x)
+
+to_om(x)
+
+\""
+         ")"))
+       (:wsl nil)))))
+   (:group-id nil)
+   (:name " new-py-script ")
+   (:x 64)
+   (:y 89)
+   (:w 132)
+   (:h 60)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:display :hidden)
+   (:pre-delay 0)
+   (:lock nil)
+   (:lambda nil)
+   (:reactive nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "X")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 0))
+  (:box
+   (:type :function)
+   (:reference load-om-library)
+   (:group-id nil)
+   (:name "load-om-library")
+   (:x 335)
+   (:y 130)
+   (:w 134)
+   (:h 34)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:icon :left)
+   (:lock nil)
+   (:lambda nil)
+   (:reactive nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "LIB")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 1))
+  (:box
+   (:type :value)
+   (:reference (:symbol "SIMPLE-TEXT-STRING" "LISPWORKS"))
+   (:group-id nil)
+   (:name "value box")
+   (:x 368)
+   (:y 95)
+   (:w 68)
+   (:h 34)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:reactive nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value "om-py")
+   (:id 2))
+  (:box
+   (:type :function)
+   (:reference seq)
+   (:group-id nil)
+   (:name "seq")
+   (:x 159)
+   (:y 238)
+   (:w 169)
+   (:h 34)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:icon :left)
+   (:lock nil)
+   (:lambda nil)
+   (:reactive nil)
+   (:inputs
+    (:input
+     (:type :standard)
+     (:name "OP")
+     (:value nil)
+     (:reactive nil))
+    (:input
+     (:type :optional)
+     (:name "op+")
+     (:value nil)
+     (:reactive nil)))
+   (:outputs
+    (:output (:name "out") (:reactive nil))
+    (:output (:name "op+1") (:reactive nil)))
+   (:id 3))
+  (:box
+   (:type :abstraction)
+   (:reference
+    (:object
+     (:class run-py-f-internal)
+     (:slots
+      ((:name " new-py-script ")
+       (:protected-p nil)
+       (:icon :py-f)
+       (:text
+        (:list
+         ";;; edit a valid python code, It will just run it."
+         ";;; changing the variables you want to use "
+         ";;; inside om-sharp to {til}d."
+         ";;; The name 'LIST' CANNOT be used as a variable name."
+         "(py_var () 
+\"
+from om_py.python_to_om import to_om
+
+list_of_numbers = []
+
+for x in range(10):
+    list_of_numbers.append(x)
+
+to_om(list_of_numbers)
+
+\"  )"))
+       (:wsl nil)))))
+   (:group-id nil)
+   (:name " new-py-script ")
+   (:x 568)
+   (:y 176)
+   (:w 132)
+   (:h 60)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:display :hidden)
+   (:pre-delay 0)
+   (:lock nil)
+   (:lambda nil)
+   (:reactive nil)
+   (:inputs)
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 4))
+  (:box
+   (:type :abstraction)
+   (:reference
+    (:object
+     (:class ompyfunctioninternal)
+     (:slots
+      ((:name "py-code")
+       (:protected-p nil)
+       (:icon :py-f)
+       (:text
+        (:list
+         ";;; edit a valid python code, It will just run it."
+         ";;; changing the variables you want to use "
+         ";;; inside om-sharp to {til}d."
+         ";;; The name 'LIST' CANNOT be used as a variable name."
+         "(py_var () 
+\"
+from om_py.python_to_om import to_om
+sum = 2 + 2 
+to_om(sum) # If you want to use something inside OM, you need to print it.
+
+\"  )"))))))
+   (:group-id nil)
+   (:name "py-code")
+   (:x 126)
+   (:y 353)
+   (:w 142)
+   (:h 60)
+   (:color nil)
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align :center)
+   (:display :hidden)
+   (:pre-delay 0)
+   (:lock nil)
+   (:lambda nil)
+   (:reactive nil)
+   (:inputs)
+   (:outputs (:output (:name "out") (:reactive nil)))
+   (:id 5))
+  (:box
+   (:type :value)
+   (:reference (:list unsigned-byte 4))
+   (:group-id nil)
+   (:name "value box")
+   (:x 114)
+   (:y 54)
+   (:w 32)
+   (:h 34)
+   (:color
+    (:color-or-nil (:color (:color 1.0 1.0 1.0 1.0)) (:t-or-nil t)))
+   (:border nil)
+   (:roundness nil)
+   (:text-font nil)
+   (:align nil)
+   (:lock nil)
+   (:reactive nil)
+   (:inputs)
+   (:outputs (:output (:name "value") (:reactive nil)))
+   (:value 4)
+   (:id 6)))
+ (:connections
+  (:connection (:from (:box 0 :out 0)) (:to (:box 3 :in 0)))
+  (:connection (:from (:box 1 :out 0)) (:to (:box 3 :in 1)))
+  (:connection (:from (:box 2 :out 0)) (:to (:box 1 :in 0)))
+  (:connection (:from (:box 6 :out 0)) (:to (:box 0 :in 0)))))

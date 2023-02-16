@@ -248,6 +248,7 @@ def CELLO_gesto1():
         "noteheadBlack",
         "noteheadBlack")
     while notes_number > 0:
+        
         choosed_freq = random.choice(cello_pitches)
         midicent = f2mc(choosed_freq)
         iterationNew = 0
@@ -314,7 +315,11 @@ def CELLO_gesto2():
     # sort amps ascending
     sorted_amp = sorted(AMPS, reverse=True)
     index = 7
+    iterationNew = 0
     while True:
+        iterationNew += 1
+        if iterationNew > 50:
+            pitch_8th = mc2f(6300)
         try:
             sorted_amp = sorted(AMPS, reverse=True)
             amp_8th = sorted_amp[index]
@@ -337,7 +342,7 @@ def CELLO_gesto2():
     numberOfIntations = 0
     while wait_good_alteration:
         alterations = CELLO_midialteration2symbol(midi_alterations)
-        if numberOfIntations > 100:
+        if numberOfIntations > 20:
             pitch, midi_alterations, cents = get_midi_class_of_midicent(6000)
         if alterations is not None:
             octave = get_octave(midicent)
@@ -399,7 +404,11 @@ def CELLO_gesto4():
             'number of pitches and AMPS are different')
         return None
     index = random.randint(1, 5)
+    iterationNew = 0
     while True:
+        iteration += 1
+        if iterationNew > 50:
+            pitch_8th = mc2f(6400)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -511,7 +520,11 @@ def CELLO_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6500)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -611,7 +624,11 @@ def CELLO_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6300)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -710,7 +727,11 @@ def CELLO_gesto8():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6500)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -907,7 +928,11 @@ def CELLO_gesto10():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6500)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1005,7 +1030,11 @@ def CELLO_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(6200)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1094,7 +1123,11 @@ def CELLO_gesto12():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    while True:
+    iteration = 0
+    while True: 
+        iteration += 1
+        if iteration > 30:
+            pitch_8th = mc2f(5900)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1112,7 +1145,6 @@ def CELLO_gesto12():
         if iterations > 30:
             midicent = 3600
             break
-        print("Inside Whilte:", midicent)
         if midicent > 7200:
             midicent = midicent - 1200
         elif midicent < 3600:

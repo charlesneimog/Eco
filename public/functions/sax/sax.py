@@ -210,7 +210,10 @@ def SAX_gesto2():
     # sort amps ascending
     sorted_amp = sorted(AMPS, reverse=True)
     index = 7
+    iterations = 0
     while True:
+        if iterations > 30:
+            pitch_8th = mc2f(random.randint(4000, 7600))
         try:
             sorted_amp = sorted(AMPS, reverse=True)
             amp_8th = sorted_amp[index]
@@ -493,7 +496,10 @@ def SAX_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        if iterations > 30:
+            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -578,7 +584,10 @@ def SAX_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        if iterations > 30:
+            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -763,7 +772,10 @@ def SAX_gesto9():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        if iterations > 30:
+            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -947,7 +959,10 @@ def SAX_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        if iterations > 30:
+            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
