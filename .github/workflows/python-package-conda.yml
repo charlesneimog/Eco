@@ -10,7 +10,6 @@ on:
 jobs:
   macos-universal-build:
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v3
       with:
@@ -18,27 +17,81 @@ jobs:
         fetch-depth: 0
 
     - name: Install Python3.11
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-
-    - name: Python version
-      run: python -c "import sys; print(sys.version)"
 
     - name: Install requirements
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt -t ./build
+        pip install -r requirements.txt -t ./py-modules
 
-    - name: Zip build
+    - name: Zip py-modules
       run: |
-        zip -r build.zip build
+        zip -r py-modules.zip py-modules
 
     - name: Upload build
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: build
-        path: build.zip
+        name: py-modules-MACOS
+        path: py-modules.zip
+
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 0
+
+    - name: Install Python3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install requirements
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt -t ./py-modules
+
+    - name: Zip py-modules
+      run: |
+        zip -r py-modules.zip py-modules
+
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: py-modules-UBUNTU
+        path: py-modules.zip
+
+  windows-build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        fetch-depth: 0
+
+    - name: Install Python3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install requirements
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt -t ./py-modules
+
+    - name: Zip py-modules
+      run: |
+        zip -r py-modules.zip py-modules
+
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: py-modules-WINDOWS
+        path: py-modules.zip
+
 
         
 
