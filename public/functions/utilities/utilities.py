@@ -44,6 +44,7 @@ def UpdateRate(measureDuration, gestureNumber, filePathname, frequencyTarget=0, 
     
     with open(filePathname, 'w') as outfile:
         json.dump(jsonData, outfile, sort_keys = True, indent = 4, ensure_ascii = False)
+    pd.print(f'Gesture {gestureNumber} updated')
 
 # ========================================
 def class2string(midiclass):

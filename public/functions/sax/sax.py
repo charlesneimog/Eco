@@ -5,7 +5,7 @@ from neoscore.core.text import Text
 # import NoteTablet
 from neoscore.western.chordrest import NoteheadTable
 from public.functions.utilities.utilities import *
-from om_py import f2mc, approx_mc, mc2f
+from om_py import f2mc, approx_mc
 try:
     import pd
     pd_print = pd.print
@@ -210,10 +210,7 @@ def SAX_gesto2():
     # sort amps ascending
     sorted_amp = sorted(AMPS, reverse=True)
     index = 7
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(4000, 7600))
         try:
             sorted_amp = sorted(AMPS, reverse=True)
             amp_8th = sorted_amp[index]
@@ -233,11 +230,7 @@ def SAX_gesto2():
     midicent = approx_mc(midicent)
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
     wait_good_alteration = True
-    iterations = 0
     while wait_good_alteration:
-        iterations += 1
-        if iterations > 30:
-            break
         alterations = SAX_midialteration2symbol(midi_alterations)
         if alterations is not None:
             octave = get_octave(midicent)
@@ -270,16 +263,12 @@ def SAX_gesto3():
     staff.unit(7)
     Chordrest(Mm(35), staff, None, (1, 1))
     Clef(ZERO, staff, 'treble')
+    UpdateRate(15000, 3, f'{HOME}/sax/sax.json')
     neoscore.render_image(
         rect=None,
         dest=f'{HOME}/sax/gesto3.png',
         wait=True,
         dpi=900)
-    UpdateRate(
-        15000,
-        3,
-        f'{HOME}/sax/sax.json',
-        tupletDuration=1000)
     pd_print("SAX_gesto3 - Gesto 3 Rendered!")
     return "Gesto 3 Rendered!"
 
@@ -300,13 +289,12 @@ def SAX_gesto4():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+
     numberOfIntations = 0
     while True:
         numberOfIntations += 1
         if numberOfIntations > 100:
-            pitch_8th = mc2f(5300)
-            break
-
+            pitch, midi_alterations, cents = get_midi_class_of_midicent(6100)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -318,12 +306,7 @@ def SAX_gesto4():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 5330
-            break
         if midicent > 6000:
             midicent = midicent - 1200
         elif midicent < 3900:
@@ -373,113 +356,35 @@ def SAX_gesto4():
         wait=True,
         dpi=600)
     UpdateRate(
-        17500,
+        17000,
         4,
         f'{home}/sax/sax.json',
         frequencyTarget=pitchHz,
         tupletDuration=1600,
-        )
-    
+        startPlay=9000)
     pd_print('SAX_gesto4: Rendered!')
     return "Gesto 4 Rendered!"
 
 # ============================================
 
-def SAX_gesto5():
-    pd_print('SAX_gesto5')
-    home = getHOME_PATH()
-    pitches = get_SAX_global_notes()
-    amps = get_SAX_global_amps()
-    pitches, amps = FreqsAndAmps_InsideRange(pitches, amps, 3900, 6000)
-    if pitches is None or pitches is []:
-        # if C3 is 4800 Eb2 is 3900
-        pitches = aleatoric_freqs(40, 3900, 6000)
-        amps = random.sample(range(10, 200), 40)
-        amps = [x * -1 for x in amps]
-    if len(pitches) != len(amps):
-        return None
-    index = random.randint(1, 7)
 
-    numberOfIntations = 0
-    while True:
-        numberOfIntations += 1
-        if numberOfIntations > 30:
-            pitch_8th = mc2f(5700) 
-            break
-        try:
-            sorted_amp = sorted(amps, reverse=True)
-            amp_8th = sorted_amp[index]
-            index_8th_amp = amps.index(amp_8th)
-            pitch_8th = pitches[index_8th_amp]
-            break
-        except BaseException:
-            index -= 1
-            continue
-    pitchHz = pitch_8th
-    midicent = f2mc(pitchHz)
-    iteration = 0
-    while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 5330
-            break
-        if midicent > 6000:
-            midicent = midicent - 1200
-        elif midicent < 3900:
-            midicent = midicent + 1200
-        else:
-            break
-    # NOTE: BARITONE TRANSPOSITION
-    pitchHz = mc2f(midicent)
-    midicent = 2100 + midicent
-    pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
-    alterations = SAX_8thTones(midi_alterations)
-    octave = get_octave(midicent)
-    pitch_info = [(pitch, alterations, octave)]
+def SAX_gesto5():
+    pd_print("SAX_gesto5")
+    HOME = getHOME_PATH()
     POSITION = (Mm(0), Mm(0))
     staff = Staff(POSITION, None, Mm(80))
-    saxClef = 'treble'
-    Clef(ZERO, staff, saxClef)
-    # Articulações
-    font = Font("Arial", Unit(9), italic=True)
-    Path.rect((Mm(5), Mm(-14)), None, Mm(12), Mm(5),
-              Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
-    Path.rect((Mm(18), Mm(-14)), None, Mm(12), Mm(5),
-              Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
-
-    # TODO: colocar s.p. na Bula
-    Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
-    MusicText((Unit(40), staff.unit(-6.5)), staff, "tremolo3", scale=0.8)
-    MusicText((Unit(55), staff.unit(-6.3)), staff, "dynamicMP", scale=0.8)
-    MusicText((Unit(70), staff.unit(-6.3)), staff,
-              "dynamicFortePiano", scale=0.8)
-
-    # Chave de repetição
-    Barline(Mm(80), staff.group, barline_style.END)
-    noteheads = NoteheadTable(
-        "repeatDot",
-        "repeatDot",
-        "repeatDot",
-        "repeatDot")
-    note = [('a', '', 4)]
-    Chordrest(Mm(76.5), staff, note, (int(1), int(1)), table=noteheads)
-    note = [('c', '', 5)]
-    Chordrest(Mm(76.5), staff, note, (int(1), int(1)), table=noteheads)
-    Chordrest(Mm(5), staff, pitch_info, (int(1), int(1)))
+    staff.unit(7)
+    Chordrest(Mm(35), staff, None, (1, 1))
+    Clef(ZERO, staff, 'treble')
+    UpdateRate(22000, 5, f'{HOME}/sax/sax.json')
     neoscore.render_image(
         rect=None,
-        dest=f'{home}/sax/gesto5.png',
+        dest=f'{HOME}/sax/gesto5.png',
         wait=True,
         dpi=600)
-    UpdateRate(
-        22000,
-        5,
-        f'{home}/sax/sax.json',
-        frequencyTarget=pitchHz,
-        tupletDuration=2200,
-        )
-    pd_print('SAX_gesto5: Rendered!')
+    pd_print("SAX_gesto5 - Gesto 3 Rendered!")
     return "Gesto 5 Rendered!"
+
 # ============================================
 
 
@@ -496,10 +401,7 @@ def SAX_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -511,12 +413,7 @@ def SAX_gesto6():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4930
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -541,6 +438,9 @@ def SAX_gesto6():
 
     # TODO: colocar s.p. na Bula
     Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
+    MusicText((Unit(55), staff.unit(-6.3)), staff, "dynamicPP", scale=0.8)
+    MusicText((Unit(70), staff.unit(-6.3)), staff, "dynamicFF", scale=0.8)
+
     # Chave de repetição
     Barline(Mm(80), staff.group, barline_style.END)
     noteheads = NoteheadTable(
@@ -584,10 +484,7 @@ def SAX_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -599,12 +496,7 @@ def SAX_gesto7():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4320
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -677,12 +569,7 @@ def SAX_gesto8():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            pitch_8th = 320
-            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -694,12 +581,7 @@ def SAX_gesto8():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4200
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -772,10 +654,7 @@ def SAX_gesto9():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -787,12 +666,7 @@ def SAX_gesto9():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4000
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -865,12 +739,7 @@ def SAX_gesto10():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            pitch_8th = 267
-            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -882,12 +751,7 @@ def SAX_gesto10():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4533
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -959,10 +823,7 @@ def SAX_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(3900, 6000))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -974,12 +835,7 @@ def SAX_gesto11():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4760
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -1050,12 +906,7 @@ def SAX_gesto12():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            pitch_8th = 240
-            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1067,12 +918,7 @@ def SAX_gesto12():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iteration = 0
     while True:
-        iteration += 1
-        if iteration > 30:
-            midicent = 4320
-            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -1090,7 +936,17 @@ def SAX_gesto12():
     Clef(ZERO, staff, saxClef)
     # Articulações
     font = Font("Arial", Unit(9), italic=True)
-    Text((Unit(20), staff.unit(-6)), staff, "diminuir a cada repetição", font)
+    Path.rect((Mm(5), Mm(-14)), None, Mm(12), Mm(5),
+              Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
+    Path.rect((Mm(18), Mm(-14)), None, Mm(12), Mm(5),
+              Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
+
+    Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
+    MusicText((Unit(40), staff.unit(-6.5)), staff, "tremolo3", scale=0.8)
+    MusicText((Unit(55), staff.unit(-6.3)), staff, "dynamicMP", scale=0.8)
+    MusicText((Unit(70), staff.unit(-6.3)), staff,
+              "dynamicFortePiano", scale=0.8)
+
     # Chave de repetição
     Barline(Mm(80), staff.group, barline_style.END)
     noteheads = NoteheadTable(
@@ -1109,7 +965,7 @@ def SAX_gesto12():
         wait=True,
         dpi=600)
     UpdateRate(
-        21000,
+        11000,
         12,
         f'{home}/sax/sax.json',
         frequencyTarget=pitchHz,

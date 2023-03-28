@@ -221,9 +221,7 @@ def GUITAR_gesto1():
         text_position = (Mm(100), Mm(-15))
     Text(text_position, None, 'Sobre a boca, seguir as alturas!',
          neoscore.default_font.modified(size=Unit(10), italic=True))
-    iteration = 0
     while gesture_number > 0:
-        iteration += 1
         gesture_number -= 1
         Path.rect((Mm(score_horizontal_position), Mm(-10)), None, Mm(80),
                   Mm(26), Brush(Color(255, 255, 255, 255)), Pen(thickness=Mm(0.5)))
@@ -296,7 +294,7 @@ def GUITAR_gesto3():
     staff.unit(7)
     Chordrest(Mm(35), staff, None, (1, 1))
     Clef(ZERO, staff, 'treble')
-    UpdateRate(13000, 3, f'{HOME}/guitar/guitar.json')
+    UpdateRate(15000, 3, f'{HOME}/guitar/guitar.json')
     neoscore.render_image(
         rect=None,
         dest=f'{HOME}/guitar/gesto3.png',
@@ -314,7 +312,7 @@ def GUITAR_gesto4():
     staff.unit(7)
     Chordrest(Mm(35), staff, None, (1, 1))
     Clef(ZERO, staff, 'treble')
-    UpdateRate(19000, 4, f'{HOME}/guitar/guitar.json')
+    UpdateRate(17000, 4, f'{HOME}/guitar/guitar.json')
     neoscore.render_image(
         rect=None,
         dest=f'{HOME}/guitar/gesto4.png',
@@ -336,6 +334,8 @@ def GUITAR_gesto5():
         amps = [x * -1 for x in amps]
     if len(pitches) != len(amps):
         return None
+    
+    
     POSITION = (Mm(0), Mm(0))
     staff = Staff(POSITION, None, Mm(80))
     saxClef = 'treble_8vb'
@@ -350,11 +350,7 @@ def GUITAR_gesto5():
     spaco = 5
     for x in range(numberOfNotes):
         index = random.randint(1, 3)
-        iteration = 0
-        while True: 
-            iteration += 1
-            if iteration > 30:
-                pitch_8th = mc2f(random.randint(7300, 7900))
+        while True:
             try:
                 sorted_amp = sorted(amps, reverse=True)
                 amp_8th = sorted_amp[index]
@@ -365,20 +361,15 @@ def GUITAR_gesto5():
                 index -= 1
                 continue
         pitchHz = pitch_8th
-        midicent = approx_mc(pitchHz)
-        iteration = 0
+        midicent = f2mc(pitchHz)
         while True:
-            iteration += 1
-            if iteration > 30:
-                midicent = random.randint(7300, 7900)
-                break
             if midicent > 6000:
                 midicent = midicent - 1200
             elif midicent < 4000:
                 midicent = midicent + 1200
             else:
                 break
-        midicent = approx_mc(midicent)
+        midicent = midicent
         pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
         alterations = GUITAR_8thTones(midi_alterations)
         octave = get_octave(midicent)
@@ -454,11 +445,7 @@ def GUITAR_gesto6():
     spaco = 5
     for x in range(numberOfNotes):
         index = random.randint(1, 3)
-        iteration = 0
-        while True: 
-            iteration += 1
-            if iteration > 30:
-                pitch_8th = mc2f(random.randint(4400, 5900))
+        while True:
             try:
                 sorted_amp = sorted(amps, reverse=True)
                 amp_8th = sorted_amp[index]
@@ -469,12 +456,8 @@ def GUITAR_gesto6():
                 index -= 1
                 continue
         pitchHz = pitch_8th
-        midicent = approx_mc(f2mc(pitchHz))
-        iteration = 0
+        midicent = f2mc(pitchHz)
         while True:
-            iteration += 1
-            if iteration > 30:
-                midicent = random.randint(4400, 5900)
             if midicent > 6000:
                 midicent = midicent - 1200
             elif midicent < 4000:
@@ -545,10 +528,7 @@ def GUITAR_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 2)
-    while True: 
-        iteration += 1
-        if iteration > 30:
-            pitch_8th = mc2f(random.randint(4400, 5900))
+    while True:
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -559,11 +539,8 @@ def GUITAR_gesto7():
             index -= 1
             continue
     pitchHz = pitch_8th
-    midicent = approx_mc(f2mc(pitchHz))
-    interations = 0 
+    midicent = f2mc(pitchHz)
     while True:
-        if interations > 30:
-            midicent = random.randint(4400, 5900)
         if midicent > 7600:
             midicent = midicent - 1200
         elif midicent < 4000:
@@ -617,7 +594,7 @@ def GUITAR_gesto7():
         frequencyTarget=pitchHz,
         gestProb=0.05,
         gestRepetition=1,
-        tupletDuration=780)
+        tupletDuration=778)
     pd_print('GUITAR_gesto7: Rendered!')
     return "Gesto 7 Rendered!"
 
@@ -637,11 +614,7 @@ def GUITAR_gesto8():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 2)
-    iterations = 0
     while True:
-        iterations += 1
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(4400, 5900))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -653,11 +626,7 @@ def GUITAR_gesto8():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
-    iterations = 0
     while True:
-        iterations += 1
-        if iterations > 30:
-            midicent = random.randint(4400, 5900)
         if midicent > 7600:
             midicent = midicent - 1200
         elif midicent < 4000:
@@ -684,7 +653,7 @@ def GUITAR_gesto8():
     Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
     MusicText((Unit(40), staff.unit(-6.5)), staff, "pluckedSnapPizzicatoAbove", scale=0.8)
     MusicText((Unit(55), staff.unit(-6.3)), staff, "dynamicFF", scale=0.8)
-    Text((Unit(13), staff.unit(8)), staff, "vib.", font)
+    Text((Unit(70), staff.unit(-6)), staff, "vib.", font)
 
     # Chave de repetição
     Barline(Mm(80), staff.group, barline_style.END)
@@ -711,7 +680,7 @@ def GUITAR_gesto8():
         gestProb=0.6,
         gestRepetition=1,
         frequencyTarget=pitchHz,
-        tupletDuration=889)
+        tupletDuration=866)
     pd_print('GUITAR_gesto8: Rendered!')
     return "Gesto 8 Rendered!"
 
@@ -731,10 +700,7 @@ def GUITAR_gesto9():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 2)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(4000, 7600))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -745,12 +711,8 @@ def GUITAR_gesto9():
             index -= 1
             continue
     pitchHz = pitch_8th
-    midicent = approx_mc(f2mc(pitchHz))
-    iterations = 0
+    midicent = f2mc(pitchHz)
     while True:
-        iterations += 1
-        if iterations > 30:
-            midicent = random.randint(4400, 5900)
         if midicent > 7600:
             midicent = midicent - 1200
         elif midicent < 4000:
@@ -813,6 +775,8 @@ def GUITAR_gesto10():
         pitches = aleatoric_freqs(40, 4000, 7600)
         amps = random.sample(range(10, 200), 40)
         amps = [x * -1 for x in amps]
+    if len(pitches) != len(amps):
+        return None
     spacoBetweenNotes = 20
     numberOfNotes = random.randint(2, 4)
     if numberOfNotes == 3:
@@ -827,12 +791,12 @@ def GUITAR_gesto10():
     guitarClef = 'treble_8vb'
     Clef(ZERO, staff, guitarClef)
 
+
+
+
     for x in range(numberOfNotes):
         index = random.randint(1, 3)
-        iterations = 0
         while True:
-            if iterations > 30:
-                pitch_8th = mc2f(random.randint(4000, 7600))
             try:
                 sorted_amp = sorted(amps, reverse=True)
                 amp_8th = sorted_amp[index]
@@ -843,12 +807,8 @@ def GUITAR_gesto10():
                 index -= 1
                 continue
         pitchHz = pitch_8th
-        midicent = approx_mc(f2mc(pitchHz))
-        iterations = 0
+        midicent = f2mc(pitchHz)
         while True:
-            iterations += 1
-            if iterations > 30:
-                midicent = random.randint(4400, 5900)
             if midicent > 6000:
                 midicent = midicent - 1200
             elif midicent < 4000:
@@ -898,7 +858,8 @@ def GUITAR_gesto10():
         31000,
         10,
         f'{home}/guitar/guitar.json',
-        tupletDuration=2066)
+        frequencyTarget=pitchHz,
+        tupletDuration=2067)
     pd_print('GUITAR_gesto10: Rendered!')
     return "Gesto 10 Rendered!"
 
@@ -918,10 +879,7 @@ def GUITAR_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 2)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(4000, 7600))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -932,12 +890,8 @@ def GUITAR_gesto11():
             index -= 1
             continue
     pitchHz = pitch_8th
-    midicent = approx_mc(f2mc(pitchHz))
-    iterations = 0
+    midicent = f2mc(pitchHz)
     while True:
-        iterations += 1
-        if iterations > 30:
-            midicent = random.randint(4400, 5900)
         if midicent > 7600:
             midicent = midicent - 1200
         elif midicent < 4000:
@@ -988,6 +942,7 @@ def GUITAR_gesto11():
         23000,
         11,
         f'{home}/guitar/guitar.json',
+        frequencyTarget=pitchHz,
         tupletDuration=2300,
         gestProb=0.30,
         gestRepetition=1)
@@ -1010,10 +965,7 @@ def GUITAR_gesto12():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 2)
-    iterations = 0
     while True:
-        if iterations > 30:
-            pitch_8th = mc2f(random.randint(4000, 7600))
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1024,12 +976,8 @@ def GUITAR_gesto12():
             index -= 1
             continue
     pitchHz = pitch_8th
-    midicent = approx_mc(f2mc(pitchHz))
-    iterations = 0
+    midicent = f2mc(pitchHz)
     while True:
-        iterations += 1
-        if iterations > 30:
-            midicent = random.randint(4400, 5900)
         if midicent > 7600:
             midicent = midicent - 1200
         elif midicent < 4000:
@@ -1048,6 +996,7 @@ def GUITAR_gesto12():
     # Articulações
     font = Font("Arial", Unit(9), italic=True)
     # TODO: colocar s.p. na Bula
+    Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
     Text((Unit(40), staff.unit(-6)), staff, "diminuindo a cada repetição", font)
 
     # Chave de repetição
@@ -1072,6 +1021,7 @@ def GUITAR_gesto12():
         8000,
         12,
         f'{home}/guitar/guitar.json',
+        frequencyTarget=pitchHz,
         tupletDuration=1143)
     pd_print('GUITAR_gesto12: Rendered!')
     return "Gesto 12 Rendered!"
