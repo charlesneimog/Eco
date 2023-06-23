@@ -5,7 +5,7 @@ from neoscore.core.text import Text
 # import NoteTablet
 from neoscore.western.chordrest import NoteheadTable
 from public.functions.utilities.utilities import *
-from om_py import f2mc, approx_mc
+from om_py import f2mc, mc2f, approx_mc
 try:
     import pd
     pd_print = pd.print
@@ -210,7 +210,12 @@ def SAX_gesto2():
     # sort amps ascending
     sorted_amp = sorted(AMPS, reverse=True)
     index = 7
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6100)
+
         try:
             sorted_amp = sorted(AMPS, reverse=True)
             amp_8th = sorted_amp[index]
@@ -289,7 +294,6 @@ def SAX_gesto4():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
-
     numberOfIntations = 0
     while True:
         numberOfIntations += 1
@@ -306,7 +310,12 @@ def SAX_gesto4():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5700
+
         if midicent > 6000:
             midicent = midicent - 1200
         elif midicent < 3900:
@@ -382,7 +391,6 @@ def SAX_gesto5():
         dest=f'{HOME}/sax/gesto5.png',
         wait=True,
         dpi=600)
-    pd_print("SAX_gesto5 - Gesto 3 Rendered!")
     return "Gesto 5 Rendered!"
 
 # ============================================
@@ -401,7 +409,11 @@ def SAX_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5700)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -413,14 +425,19 @@ def SAX_gesto6():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5700
+
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
             midicent = midicent - 1200
         else:
             break
-    midicent = 2100 + midicent
+    midicent = 2100 + midicent # transpotiion
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
     alterations = SAX_8thTones(midi_alterations)
     octave = get_octave(midicent)
@@ -484,7 +501,12 @@ def SAX_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5500)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -496,7 +518,13 @@ def SAX_gesto7():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5500
+            break
+
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -569,7 +597,12 @@ def SAX_gesto8():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5300)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -581,7 +614,13 @@ def SAX_gesto8():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5300
+            break
+
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -642,7 +681,6 @@ def SAX_gesto8():
 
 
 def SAX_gesto9():
-    pd_print('SAX_gesto9')
     home = getHOME_PATH()
     pitches = get_SAX_global_notes()
     amps = get_SAX_global_amps()
@@ -654,7 +692,14 @@ def SAX_gesto9():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5200)
+            break
+
+
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -666,7 +711,13 @@ def SAX_gesto9():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5200
+            break
+
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -739,7 +790,11 @@ def SAX_gesto10():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5800)
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -751,7 +806,12 @@ def SAX_gesto10():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5800
+            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -823,7 +883,12 @@ def SAX_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5400)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -835,7 +900,12 @@ def SAX_gesto11():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5400
+            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -906,7 +976,12 @@ def SAX_gesto12():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5100)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -918,7 +993,12 @@ def SAX_gesto12():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 5100
+            break
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
