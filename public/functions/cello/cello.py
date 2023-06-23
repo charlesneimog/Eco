@@ -4,7 +4,7 @@ from neoscore.core import neoscore
 from neoscore.core.text import Text
 from neoscore.western.chordrest import NoteheadTable
 from public.functions.utilities.utilities import *
-from om_py import f2mc, approx_mc
+from om_py import f2mc, mc2f, approx_mc
 try:
     import pd
     pd_print = pd.print
@@ -399,7 +399,12 @@ def CELLO_gesto4():
             'number of pitches and AMPS are different')
         return None
     index = random.randint(1, 5)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(4500)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -420,9 +425,9 @@ def CELLO_gesto4():
             midicent = midicent + 1200
         else:
             break
+
         if iteration > 50:
             midicent = 6000
-            gestError('cello', 'gesto4', 'error in octave while')
             break
     pitchHz = mc2f(midicent)
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
@@ -511,7 +516,12 @@ def CELLO_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6100)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -523,8 +533,12 @@ def CELLO_gesto6():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 5500
+            break
         if midicent > 7200:
             midicent = midicent - 1200
         elif midicent < 3600:
@@ -607,7 +621,12 @@ def CELLO_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5900)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -619,8 +638,12 @@ def CELLO_gesto7():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5900)
+            break
         if midicent > 7200:
             midicent = midicent - 1200
         elif midicent < 3600:
@@ -702,7 +725,12 @@ def CELLO_gesto8():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5000)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -714,8 +742,12 @@ def CELLO_gesto8():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 5000
+            break
         if midicent > 4801:
             midicent = midicent - 1200
         elif midicent < 3600:
@@ -795,7 +827,12 @@ def CELLO_gesto9():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6700)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -807,7 +844,12 @@ def CELLO_gesto9():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 6700
+            break
         print("Inside Whilte:", midicent)
         if midicent > 7200:
             midicent = midicent - 1200
@@ -889,7 +931,12 @@ def CELLO_gesto10():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6100)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -901,8 +948,12 @@ def CELLO_gesto10():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 6100
+            break
         if midicent > 7200:
             midicent = midicent - 1200
         elif midicent < 3600:
@@ -983,7 +1034,12 @@ def CELLO_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(5400)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -995,8 +1051,12 @@ def CELLO_gesto11():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 5400
+            break
         if midicent > 7200:
             midicent = midicent - 1200
         elif midicent < 3600:
@@ -1056,7 +1116,6 @@ def CELLO_gesto11():
 
 
 def CELLO_gesto12():
-    pd_print('CELLO_gesto12')
     home = getHOME_PATH()
     pitches = get_CELLO_global_notes()
     amps = get_CELLO_global_amps()
@@ -1068,7 +1127,12 @@ def CELLO_gesto12():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(4500)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1080,8 +1144,12 @@ def CELLO_gesto12():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 4500
+            break
         if midicent > 7200:
             midicent = midicent - 1200
         elif midicent < 3600:

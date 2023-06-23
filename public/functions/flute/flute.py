@@ -5,7 +5,7 @@ from neoscore.core.text import Text
 from neoscore.western.chordrest import NoteheadTable
 from neoscore.western.hairpin import Hairpin
 from public.functions.utilities.utilities import *
-from om_py import f2mc, approx_mc
+from om_py import f2mc, mc2f, approx_mc
 try:
     import pd
     pd_print = pd.print
@@ -376,7 +376,11 @@ def FLUTE_gesto3():
     if len(pitches) != len(amps):
         return None
     index = 2  # NOTE: Here we choose the second pitch more loud
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = 6100
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -388,8 +392,12 @@ def FLUTE_gesto3():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 6200
+
         if midicent > 8200:
             midicent = midicent - 1200
         elif midicent < 6000:
@@ -464,7 +472,13 @@ def FLUTE_gesto4():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6100)
+            break
+
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -476,14 +490,20 @@ def FLUTE_gesto4():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
-        print("Inside Whilte:", midicent)
+        iterations += 1
+        if iterations > 25:
+            midicent = 6100
+            break
+
         if midicent > 8200:
             midicent = midicent - 1200
         elif midicent < 6000:
             midicent = midicent + 1200
         else:
             break
+
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
     alterations = FLUTE_8thTones(midi_alterations)
     octave = get_octave(midicent)
@@ -547,7 +567,12 @@ def FLUTE_gesto5():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0 
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(7900)
+
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -559,7 +584,13 @@ def FLUTE_gesto5():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iteration = 0
     while True:
+        iteration += 1
+        if iteration > 25:
+            midicent = 7900
+            break
+
         if midicent > 8200:
             midicent = midicent - 1200
         elif midicent < 6000:
@@ -625,7 +656,13 @@ def FLUTE_gesto6():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iteration = 0
     while True:
+        iteration += 1
+        if iteration > 25:
+            pitch_8th = mc2f(6300)
+            break
+
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -646,7 +683,8 @@ def FLUTE_gesto6():
             midicent = midicent + 1200
         else:
             break
-        if iteration > 50:
+
+        if iteration > 25:
             midicent = 6300
             break
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
@@ -707,7 +745,6 @@ def FLUTE_gesto6():
 
 
 def FLUTE_gesto7():
-    pd_print('FLUTE_gesto7')
     home = getHOME_PATH()
     pitches = get_FLUTE_global_notes()
     amps = get_FLUTE_global_amps()
@@ -720,7 +757,13 @@ def FLUTE_gesto7():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6100)
+            break
+
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -732,7 +775,13 @@ def FLUTE_gesto7():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iteration = 0
     while True:
+        iteration += 1
+        if iteration > 25:
+            midicent = 6400
+            break
+
         if midicent > 8200:
             midicent = midicent - 1200
         elif midicent < 6000:
@@ -799,7 +848,13 @@ def FLUTE_gesto8():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0 
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(7300)
+            break
+
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -820,7 +875,7 @@ def FLUTE_gesto8():
             midicent = midicent + 1200
         else:
             break
-        if iteration > 50:
+        if iteration > 25:
             midicent = 6700
             break
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
@@ -890,7 +945,12 @@ def FLUTE_gesto9():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(7850)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -912,7 +972,9 @@ def FLUTE_gesto9():
         else:
             break
         if iteration > 50:
-                midicent = 6753
+            midicent = 6753
+            break
+
     pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
     alterations = FLUTE_8thTones(midi_alterations)
     octave = get_octave(midicent)
@@ -980,7 +1042,12 @@ def FLUTE_gesto10():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6600)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1069,7 +1136,12 @@ def FLUTE_gesto11():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6560)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1081,7 +1153,13 @@ def FLUTE_gesto11():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        pd.print(iterations)
+        if iterations > 25:
+            midicent = 7400
+            break
         if midicent > 7300:
             midicent = midicent - 1200
         elif midicent < 6000:
@@ -1155,7 +1233,12 @@ def FLUTE_gesto12():
     if len(pitches) != len(amps):
         return None
     index = random.randint(1, 7)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            pitch_8th = mc2f(6800)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1167,7 +1250,12 @@ def FLUTE_gesto12():
             continue
     pitchHz = pitch_8th
     midicent = f2mc(pitchHz)
+    iterations = 0
     while True:
+        iterations += 1
+        if iterations > 25:
+            midicent = 6800
+            break
         if midicent > 8200:
             midicent = midicent - 1200
         elif midicent < 6000:
