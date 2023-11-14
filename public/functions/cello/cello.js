@@ -245,7 +245,7 @@ function randomGestureScoreFile(randomGesture){
 
 // =======================================
 function randomGestureDurationData(randomGesture){
-    var scoreImages = {1: 2500, 2: 2500};
+    var scoreImages = {1: 3500, 2: 4000};
     return scoreImages[randomGesture];
 }
 
@@ -265,7 +265,7 @@ function readTextFile(file, callback) {
 // =======================================
 function updateMeasureBarProgress(measureDuration, startPlay, tupletDuration, frequencyTarget, gestureNumber, scoreImage){
     var start = new Date().getTime();
-    var interval = setInterval(function() {
+    let interval = setInterval(function() {
         var now = new Date().getTime();
         var progress = now - start;
         if (executingTune == false && gestureNumber > 2){

@@ -298,7 +298,8 @@ def SAX_gesto4():
     while True:
         numberOfIntations += 1
         if numberOfIntations > 100:
-            pitch, midi_alterations, cents = get_midi_class_of_midicent(6100)
+            pitch_8th = mc2f(6100)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -315,6 +316,7 @@ def SAX_gesto4():
         iterations += 1
         if iterations > 25:
             midicent = 5700
+            break
 
         if midicent > 6000:
             midicent = midicent - 1200
@@ -370,7 +372,7 @@ def SAX_gesto4():
         f'{home}/sax/sax.json',
         frequencyTarget=pitchHz,
         tupletDuration=1600,
-        startPlay=9000)
+        )
     pd_print('SAX_gesto4: Rendered!')
     return "Gesto 4 Rendered!"
 
@@ -414,6 +416,7 @@ def SAX_gesto6():
         iterations += 1
         if iterations > 25:
             pitch_8th = mc2f(5700)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -430,6 +433,7 @@ def SAX_gesto6():
         iterations += 1
         if iterations > 25:
             midicent = 5700
+            break
 
         if midicent < 3900:
             midicent = midicent + 1200
@@ -698,8 +702,6 @@ def SAX_gesto9():
         if iterations > 25:
             pitch_8th = mc2f(5200)
             break
-
-
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -717,7 +719,6 @@ def SAX_gesto9():
         if iterations > 25:
             midicent = 5200
             break
-
         if midicent < 3900:
             midicent = midicent + 1200
         elif midicent > 6000:
@@ -795,6 +796,7 @@ def SAX_gesto10():
         iterations += 1
         if iterations > 25:
             pitch_8th = mc2f(5800)
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -1020,6 +1022,8 @@ def SAX_gesto12():
               Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
     Path.rect((Mm(18), Mm(-14)), None, Mm(12), Mm(5),
               Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
+
+    Text((Unit(20), staff.unit(-10)), staff, "diminuir a cada repetição", font)
 
     Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
     MusicText((Unit(40), staff.unit(-6.5)), staff, "tremolo3", scale=0.8)

@@ -381,6 +381,7 @@ def FLUTE_gesto3():
         iterations += 1
         if iterations > 25:
             pitch_8th = 6100
+            break
         try:
             sorted_amp = sorted(amps, reverse=True)
             amp_8th = sorted_amp[index]
@@ -397,6 +398,7 @@ def FLUTE_gesto3():
         iterations += 1
         if iterations > 25:
             midicent = 6200
+            break
 
         if midicent > 8200:
             midicent = midicent - 1200
@@ -572,6 +574,7 @@ def FLUTE_gesto5():
         iterations += 1
         if iterations > 25:
             pitch_8th = mc2f(7900)
+            break
 
         try:
             sorted_amp = sorted(amps, reverse=True)
@@ -683,7 +686,6 @@ def FLUTE_gesto6():
             midicent = midicent + 1200
         else:
             break
-
         if iteration > 25:
             midicent = 6300
             break
@@ -781,7 +783,6 @@ def FLUTE_gesto7():
         if iteration > 25:
             midicent = 6400
             break
-
         if midicent > 8200:
             midicent = midicent - 1200
         elif midicent < 6000:
@@ -1070,6 +1071,7 @@ def FLUTE_gesto10():
             break
         if iteration > 50:
             midicent = 6753
+            break
 
         pitch, midi_alterations, cents = get_midi_class_of_midicent(midicent)
     alterations = FLUTE_8thTones(midi_alterations)
@@ -1278,6 +1280,8 @@ def FLUTE_gesto12():
               Brush.no_brush(), Pen(thickness=Mm(0.25)))  # rects
 
     # TODO: colocar s.p. na Bula
+    Text((Unit(20), staff.unit(-10)), staff, "diminuir a cada repetição", font)
+
     Text((Unit(20), staff.unit(-6)), staff, "ord.", font)
     MusicText((Unit(40), staff.unit(-6.5)), staff, "tremolo3", scale=0.8)
     MusicText((Unit(55), staff.unit(-6.3)), staff, "dynamicMP", scale=0.8)

@@ -245,7 +245,7 @@ function randomGestureScoreFile(randomGesture){
 
 // =======================================
 function randomGestureDurationData(randomGesture){
-    var scoreImages = {1: 1500, 2: 1500};
+    var scoreImages = {1: 4500, 2: 4500};
     return scoreImages[randomGesture];
 }
 
@@ -291,10 +291,7 @@ function updateMeasureBarProgress(measureDuration, startPlay, tupletDuration, fr
         var div_width = Math.min(progress / measureDuration * 100, 100);
         measureDivWidth = div_width;
         div.style.width =  div_width + '%';
-        // if (div_width < 99){
-        //     measureFinished = false;
-        // }
-        if (div_width == 100) {
+        if (div_width >= 100) {
             clearInterval(interval);
             div.style.width = 100;
             measureFinished = true;
@@ -347,7 +344,7 @@ function metronome4Attack(span, startPlay, tupletDuration, frequencyTarget, gest
     var interval = setInterval(function() {
         var now = new Date().getTime();
         var progress = now - start;
-        var div_width = Math.min(progress / tupletDuration * 100, 100);
+        div_width = Math.min(progress / tupletDuration * 100, 100);
         var gestRepeatRandom = Math.random();
         if (gestRepeatRandom > (1 - gestProb) && fastGestureAlreadyPlayed == false && measureDivWidth > 33){
             var randomGesture = Math.floor(Math.random() * 2) + 1;
@@ -374,7 +371,7 @@ function metronome4Attack(span, startPlay, tupletDuration, frequencyTarget, gest
             var svgCircle = document.getElementById("BangCircle");
             svgCircle.style.fill = "#FFFFFF";
         }
-        if (div_width == 100) {
+        if (div_width >= 100) {
             clearInterval(interval);
             noBang = false;
             if (measureFinished === false){

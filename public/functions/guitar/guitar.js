@@ -243,7 +243,7 @@ function randomGestureScoreFile(randomGesture){
 
 // =======================================
 function randomGestureDurationData(randomGesture){
-    var scoreImages = {1: 2500, 2: 2500};
+    var scoreImages = {1: 4500, 2: 4500};
     return scoreImages[randomGesture];
 }
 

@@ -1,10 +1,10 @@
 {
-    "Name": "gesto8",
-    "frequencyTarget": 202,
+    "Name": "gesto0",
+    "frequencyTarget": 0,
     "gestProb": 0.0,
     "gestRepetition": 0.6,
-    "gestureNumber": 8,
-    "measureDuration": 7000,
+    "gestureNumber": 0,
+    "measureDuration": 0,
     "startPlay": 0,
-    "tupletDuration": 1167
+    "tupletDuration": 0
 }
