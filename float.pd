@@ -1,0 +1,5 @@
+#N canvas 877 116 769 595 8;
+#X obj 77 30 py4pd -lib py4pd;
+#X obj 21 91 py.chord 248 248;
+#X msg 21 66 C4 C+5 D-6;
+#X connect 2 0 1 0;
